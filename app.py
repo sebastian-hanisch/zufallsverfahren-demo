@@ -129,7 +129,7 @@ with st.sidebar:
     n = st.slider("Größe n der Matrizen", *bounds("n_slider"), key="n_slider", help="n × n; alle 2^n Vektoren aus {0, 1}^n werden aufgezählt (bei n = 12 sind das 4.096).")
     seed = st.number_input("Zufalls-Seed", *bounds("seed_input"), key="seed_input", step=1)
     st.button("🎲 Neue Matrizen generieren", width="stretch", on_click=randomize_seed)
-    kind = st.selectbox("Fehler im Produkt", list(C.KINDS), format_func=C.KINDS.get, key="kind_select", help="Wie C vom richtigen Produkt A · B abweicht. Fehler in einer Zeile sind die schwersten.")
+    kind = st.selectbox("Fehler im Produkt", list(C.KINDS), format_func=C.KINDS.get, key="kind_select", help="Wie C vom richtigen Produkt A · B abweicht. Am schwersten fallen Fehler auf, die in einer Spalte liegen oder sich in einer Zeile aufheben.")
     runs = st.select_slider("Läufe der Stichprobe", options=list(C.RUNS_OPTIONS), format_func=fmt_int, key="runs_select", help="Nur Illustration: wie oft der Fehler nach t Runden unentdeckt bleibt, wenn man t zufällige Vektoren zieht.")
     st.markdown("**Beide Prüfungen**")
     t = st.slider("Runden t (Vektoren bzw. Basen)", *bounds("t_slider"), key="t_slider", help="Unabhängige Wiederholungen des Tests.")
@@ -283,8 +283,8 @@ st.markdown(
 | **Die Schranken sind bewiesen** | Es sind Sätze (Freivalds: höchstens die Hälfte der Vektoren lügt; Rabin: höchstens ein Viertel der Basen). Die Demo **prüft** sie exakt an Instanzen (Matrizen bis 12 × 12, Zahlen bis 5.000), beweist sie nicht. | – |
 | **Die Stichprobe belegt die Wahrscheinlichkeit** | Sie ist eine Illustration mit Stichprobenfehler; der Beleg ist die exakte Aufzählung. | – |
 | **Die Runden sind unabhängig und echt zufällig** | Hier zieht ein Generator mit festem Zufalls-Seed; die Verstärkung (1/2)^t setzt unabhängige Runden voraus. | – |
-| **Alle Fehler sind gleich schwer** | Freivalds erreicht 1/2 nur bei Fehlern in einer Zeile; zufällige Fehler fallen mit Wahrscheinlichkeit 1 − 2^(−n) auf. Wer Fehler gezielt in eine Zeile legt, trifft die Schranke. | – |
-| **Der Fermat-Test ist ein Primzahltest** | Auf Carmichael-Zahlen besteht er die Mehrheit der Basen; ohne die starke Variante ist er kein Test mit Schranke. | – |
+| **Alle Fehler sind gleich schwer** | Freivalds erreicht 1/2 bei Fehlern in einer Spalte und bei sich aufhebenden Einträgen einer Zeile; bei einer ganz zufälligen Matrix lügt nur der Nullvektor (2^(−n)). Wer Fehler gezielt so legt, trifft die Schranke. | – |
+| **Der Fermat-Test ist ein Primzahltest** | Auf den gezeigten Carmichael-Zahlen (bis 50.000) besteht er die Mehrheit der Basen; ohne die starke Variante ist er kein Test mit Schranke. | – |
 | **Zufall ist nötig** | Für den Primzahltest nicht (AKS 2004, deterministisch polynomiell); über die Praxis (Miller–Rabin ist einfacher und schneller) wird hier nichts gemessen. | – |
 | **Mehrheitsentscheid ist so billig wie Einseitigkeit** | Er braucht bei Fehler 1/3 eine Größenordnung mehr Läufe (Experiment 4). | – |
 """
